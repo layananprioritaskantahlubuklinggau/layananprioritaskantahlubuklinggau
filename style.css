@@ -1,0 +1,243 @@
+/* Mobile-first 'Link in Bio' layout */
+:root{
+  --card-bg: #ffffff;
+  --pill-bg: #2d2d2d;
+  --pill-text: #ffffff;
+  --shadow: 0 12px 30px rgba(0,0,0,.18);
+  --radius-xl: 22px;
+  --radius-xxl: 28px;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: 'Inter',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+  color:#0f172a;
+  background:#eaeef3;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+/* SECTION wrapper: biarkan halaman yang scroll, bukan area link */
+.hero{
+  position:relative;
+  min-height:100dvh;
+  /* ruang atas minimum 84px + dukung notch (safe area) */
+  padding-top: max(84px, calc(6vh + env(safe-area-inset-top)));
+  padding-bottom: max(32px, 4vh);
+}
+
+.bg{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  filter:brightness(.72) saturate(1.05);
+}
+.scrim{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg, rgba(0,0,0,.2), rgba(0,0,0,.35));
+}
+
+/* Floating card; tinggi tidak dibatasi supaya ikut scroll */
+.card{
+  position:relative;
+  width:min(420px, 92vw);
+  background:var(--card-bg);
+  border-radius:var(--radius-xxl);
+  box-shadow:var(--shadow);
+  overflow:visible;            /* agar logo tidak terpotong */
+  display:flex;
+  flex-direction:column;
+  padding-top:96px;            /* ruang untuk logo */
+  margin:0 auto;               /* center horizontal */
+}
+
+/* Floating logo */
+.logo-wrap{
+  position:absolute;
+  top:-48px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#fff;
+  padding:10px 12px;
+  border-radius:24px;
+  box-shadow:var(--shadow);
+}
+.logo{
+  display:block;
+  width:86px;
+  height:86px;
+  object-fit:contain;
+}
+
+/* Header */
+.card-header{
+  text-align:center;
+  padding:20px 22px 8px;
+}
+h1{
+  font-size:22px;
+  margin:0 0 2px;
+  font-weight:700;
+}
+.sub{
+  font-size:13px;
+  margin:0 0 10px;
+  color:#475569;
+  font-weight:600;
+}
+.divider{
+  width:56px;
+  height:3px;
+  background:#0f172a;
+  opacity:.12;
+  border-radius:999px;
+  margin:0 auto 10px;
+}
+.hint{
+  font-size:12px;
+  color:#6b7280;
+  margin:0 0 10px;
+}
+
+/* Link area: TIDAK ada overflow terpisah; biarkan body yang scroll */
+.links{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  padding:10px 18px 18px;
+  overflow:visible;            /* sebelumnya auto -> menyebabkan scroll lokal */
+  scroll-behavior:smooth;
+}
+.btn{
+  text-decoration:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  min-height:48px;
+  padding:14px 16px;
+  border-radius:999px;
+  background:var(--pill-bg);
+  color:var(--pill-text);
+  font-weight:700;
+  font-size:12px;
+  letter-spacing:.3px;
+  box-shadow:0 6px 18px rgba(0,0,0,.18);
+  transition:transform .08s ease, opacity .2s ease;
+}
+.btn:active{ transform:scale(.98) }
+.btn:focus-visible{
+  outline:3px solid #93c5fd;
+  outline-offset:2px;
+}
+
+/* Footer */
+.footer{
+  padding:6px 20px 16px;
+  display:flex;
+  justify-content:center;
+}
+.insta{
+  font-size:11px;
+  color:#1f2937;
+  text-decoration:none;
+  opacity:.85;
+}
+.insta:hover{text-decoration:underline}
+
+/* Scroll tip dimatikan karena seluruh halaman sudah scroll */
+.scroll-tip{ display:none !important; }
+
+/* Desktop tweaks */
+@media (min-width: 640px){
+  .card{
+    width:min(460px, 88vw);
+    padding-top:108px;
+  }
+  .logo{ width:96px; height:96px; }
+  .logo-wrap{ top:-52px; }
+}
+
+@media (max-width: 520px){
+  .logo-wrap{ top:-40px; }   /* sebelumnya -48px */
+  .card{ padding-top:104px; }/* tambah ruang header agar tidak mepet */
+}
+
+@media (max-width: 360px){
+  .logo-wrap{ top:-36px; }
+  .card{ padding-top:110px; }
+}
+
+/* ===== Detail page (doc) ===== */
+.card.doc{
+  width:min(720px, 94vw);      /* sedikit lebih lebar untuk teks/flowchart */
+  padding-top:108px;           /* ruang untuk logo */
+}
+
+.content{
+  padding: 0 20px 10px;
+}
+
+.block{ 
+  background: #fff;
+  border-radius: 18px;
+  padding: 14px 14px 2px;
+  margin: 6px 0 14px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.06);
+}
+
+.content h2{
+  font-size: 16px;
+  margin: 6px 6px 8px;
+  font-weight: 700;
+  color: #111827;
+}
+.content p{ 
+  margin: 0 6px 12px; 
+  color: #374151;
+  line-height: 1.6;
+}
+.checklist{
+  margin: 0 20px 14px;
+  padding-left: 14px;
+  color:#374151;
+}
+.checklist li{ margin: 6px 0; }
+
+/* Flowchart image fills container */
+.flowchart{
+  margin: 0;
+  border-radius: 16px;
+  overflow: hidden;
+}
+.flowchart img{
+  display:block;
+  width:100%;
+  height:auto;                 /* fit-to-container */
+}
+
+/* Back link */
+.backbar{
+  padding-top: 8px;
+  border-top: 1px solid rgba(0,0,0,.06);
+}
+.back{
+  font-size: 12px;
+  text-decoration: none;
+  color:#374151;
+}
+.back:hover{ text-decoration: underline; }
+
+/* Mobile safe spacing tweaks */
+@media (max-width:520px){
+  .card.doc{ padding-top:114px; }
+  .logo-wrap{ top:-40px; }
+}
+@media (max-width:360px){
+  .card.doc{ padding-top:120px; }
+  .logo-wrap{ top:-36px; }
+}
